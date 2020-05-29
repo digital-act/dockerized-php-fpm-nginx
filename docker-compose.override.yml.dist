@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      args:
+        UID: 1000 # change this to match your uid and gid
+        GID: 1000 # if you are on linux
+    ports:
+      - 8000:80
+
+  node:
+    build:
+      args:
+        UID: 1000 # change this to match your uid and gid
+        GID: 1000 # if you are on linux
+
+  smtp:
+    ports:
+      - 1080:80

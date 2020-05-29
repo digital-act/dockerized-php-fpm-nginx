@@ -1,0 +1,27 @@
+version: '3.7'
+
+services:
+  app:
+    build:
+      context: docker/build/app
+    working_dir: /home/dact/project
+    volumes:
+      - ./docker/config/dev/php-fpm-pool.conf:/etc/php/7.4/fpm/pool.d/dact.conf:ro
+      - ./docker/config/dev/nginx.conf:/etc/nginx/sites-enabled/dact:ro
+      - ./project:/home/dact/project:delegated
+    environment:
+      TZ: UTC
+
+  node:
+    build:
+      context: docker/build/node
+    volumes:
+      - ./:/home/node/project:delegated
+    entrypoint: tail -f /dev/null
+    environment:
+      TZ: UTC
+
+  smtp:
+    image: tophfr/mailcatcher
+    environment:
+      TZ: UTC
